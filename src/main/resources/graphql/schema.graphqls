@@ -60,7 +60,6 @@ input OrderProductRequest {
     productId: ID!,
     quantity: Int!,
     unitPrice: Float!
-    quantity: Int!
 }
 
 input OrderRequest {
