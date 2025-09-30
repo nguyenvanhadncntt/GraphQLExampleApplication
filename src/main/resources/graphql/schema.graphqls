@@ -19,13 +19,17 @@ type Product {
 
 type Order {
     id: ID,
-    price: Float,
+    customerId: ID,
+    customerName: String,
+    total: Float,
     orderDate: DateTime,
     orderProducts: [OrderProduct],
 }
 
 type OrderProduct {
     id: ID,
+    productId: ID,
+    productName: String,
     unitPrice: Float,
     totalProductPrice: Float,
     quantity: Int
@@ -34,6 +38,7 @@ type OrderProduct {
 type Query {
     getCustomers: [Customer]
     searchCustomers(name: String, page: Int!, size: Int!): [Customer]
+    getProducts: [Product]
 }
 
 input CustomerRequest {
@@ -51,8 +56,21 @@ input ProductRequest {
     price: Float
 }
 
+input OrderProductRequest {
+    productId: ID!,
+    quantity: Int!,
+    unitPrice: Float!
+    quantity: Int!
+}
+
+input OrderRequest {
+    customerId: ID!,
+    orderProducts: [OrderProductRequest]!
+}
+
 type Mutation {
     createCustomer(customer: CustomerRequest!): Customer!
     deleteCustomer(id: ID): Boolean!
     createProduct(product: ProductRequest!): Product!
+    placeOrder(order: OrderRequest!): Order!
 }

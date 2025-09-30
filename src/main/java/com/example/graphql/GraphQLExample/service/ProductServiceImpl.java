@@ -5,6 +5,8 @@ import com.example.graphql.GraphQLExample.model.Product;
 import com.example.graphql.GraphQLExample.repository.ProductRepository;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class ProductServiceImpl implements ProductService {
 
@@ -25,4 +27,18 @@ public class ProductServiceImpl implements ProductService {
         productDto.setId(product.getId());
         return productDto;
     }
+
+    @Override
+    public List<ProductDto> getProducts() {
+        return productRepository.findAll().stream().map(product ->
+                ProductDto.builder()
+                        .id(product.getId())
+                        .name(product.getName())
+                        .description(product.getDescription())
+                        .price(product.getPrice())
+                        .build()
+        ).toList();
+    }
+
+
 }

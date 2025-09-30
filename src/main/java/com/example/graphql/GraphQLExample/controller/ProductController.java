@@ -7,6 +7,8 @@ import org.springframework.graphql.data.method.annotation.MutationMapping;
 import org.springframework.graphql.data.method.annotation.QueryMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
+
 @RestController
 public class ProductController {
     private final ProductService productService;
@@ -18,5 +20,10 @@ public class ProductController {
     @MutationMapping
     public ProductDto createProduct(@Argument ProductDto product) {
         return productService.createProduct(product);
+    }
+
+    @QueryMapping
+    public List<ProductDto> getProducts() {
+        return productService.getProducts();
     }
 }

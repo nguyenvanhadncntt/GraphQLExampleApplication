@@ -22,7 +22,7 @@ public class Order {
     private Long id;
     private BigDecimal total;
     private LocalDateTime orderDate;
-    @OneToMany
+    @OneToMany(mappedBy = "order", cascade = CascadeType.ALL)
     private List<OrderProduct> orderProducts;
     @OneToOne
     private Customer customer;
