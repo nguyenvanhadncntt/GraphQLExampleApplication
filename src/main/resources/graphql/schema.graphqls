@@ -1,0 +1,58 @@
+scalar Date
+scalar DateTime
+
+type Customer {
+    id: ID,
+    name: String,
+    address: String,
+    birthDate: Date,
+    phoneNumber: String,
+    orders: [Order]
+}
+
+type Product {
+    id: ID,
+    name: String,
+    description: String,
+    price: Float
+}
+
+type Order {
+    id: ID,
+    price: Float,
+    orderDate: DateTime,
+    orderProducts: [OrderProduct],
+}
+
+type OrderProduct {
+    id: ID,
+    unitPrice: Float,
+    totalProductPrice: Float,
+    quantity: Int
+}
+
+type Query {
+    getCustomers: [Customer]
+    searchCustomers(name: String, page: Int!, size: Int!): [Customer]
+}
+
+input CustomerRequest {
+    id: ID,
+    name: String,
+    address: String,
+    birthDate: Date,
+    phoneNumber: String
+}
+
+input ProductRequest {
+    id: ID,
+    name: String,
+    description: String,
+    price: Float
+}
+
+type Mutation {
+    createCustomer(customer: CustomerRequest!): Customer!
+    deleteCustomer(id: ID): Boolean!
+    createProduct(product: ProductRequest!): Product!
+}
