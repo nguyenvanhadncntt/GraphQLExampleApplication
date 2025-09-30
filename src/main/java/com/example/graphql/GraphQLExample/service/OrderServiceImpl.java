@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Service
 public class OrderServiceImpl implements OrderService {
@@ -54,5 +55,23 @@ public class OrderServiceImpl implements OrderService {
                 .total(savedOrder.getTotal())
                 .orderProducts(orderDto.getOrderProducts())
                 .build();
+    }
+
+    @Override
+    public List<OrderDto> getOrders() {
+        return orderRepository.findAll().stream().map(order -> OrderDto.builder()
+                .id(order.getId())
+                .customerId(order.getCustomer().getId())
+                .orderDate(order.getOrderDate())
+                .total(order.getTotal())
+                .orderProducts(order.getOrderProducts().stream().map(orderProduct -> new com.example.graphql.GraphQLExample.dto.OrderProductDto(
+                        orderProduct.getId(),
+                        orderProduct.getProduct().getId(),
+                        orderProduct.getProduct().getName(),
+                        orderProduct.getUnitPrice(),
+                        orderProduct.getTotalProductPrice(),
+                        orderProduct.getQuantity()
+                )).toList())
+                .build()).toList();
     }
 }

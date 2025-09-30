@@ -5,10 +5,13 @@ import com.example.graphql.GraphQLExample.publisher.OrderPublisher;
 import com.example.graphql.GraphQLExample.service.OrderService;
 import org.springframework.graphql.data.method.annotation.Argument;
 import org.springframework.graphql.data.method.annotation.MutationMapping;
+import org.springframework.graphql.data.method.annotation.QueryMapping;
 import org.springframework.graphql.data.method.annotation.SubscriptionMapping;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RestController;
 import reactor.core.publisher.Flux;
+
+import java.util.List;
 
 @Controller
 public class OrderController {
@@ -18,6 +21,11 @@ public class OrderController {
     public OrderController(OrderService orderService, OrderPublisher orderPublisher) {
         this.orderService = orderService;
         this.orderPublisher = orderPublisher;
+    }
+
+    @QueryMapping
+    public List<OrderDto> getOrders() {
+        return orderService.getOrders();
     }
 
     @MutationMapping

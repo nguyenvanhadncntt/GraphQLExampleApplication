@@ -1,5 +1,6 @@
 scalar Date
 scalar DateTime
+scalar LocalDateTime
 
 type Customer {
     id: ID,
@@ -39,6 +40,7 @@ type Query {
     getCustomers: [Customer]
     searchCustomers(name: String, page: Int!, size: Int!): [Customer]
     getProducts: [Product]
+    getOrders: [Order]
 }
 
 input CustomerRequest {
